@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Non-Veg Dishes | CaloriChef</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .dish-card {
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: 0.3s;
+    }
+    .dish-card:hover {
+      transform: scale(1.02);
+    }
+    .filter-select {
+      max-width: 250px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container py-5">
+  <h2 class="text-center mb-4">Healthy Non-Veg Indian Dishes</h2>
+
+  <div class="d-flex justify-content-center mb-4 gap-3 flex-wrap">
+    <select class="form-select filter-select" id="filter-nutrient">
+      <option value="all">Filter by Nutrient</option>
+      <option value="high-protein">High Protein</option>
+      <option value="low-fat">Low Fat</option>
+      <option value="low-carb">Low Carb</option>
+      <option value="low-calories">Low Calories</option>
+    </select>
+  </div>
+
+  <div class="row" id="dishContainer">
+    <!-- Dish Cards -->
+  </div>
+</div>
+
+<script>
+const dishes = [
+  {
+    name: "Tandoori Chicken",
+    img: "https://images.unsplash.com/photo-1621996346565-0e2b7fc65b1d",
+    nutrition: "Protein: 35g | Carbs: 5g | Fat: 8g | Calories: 300",
+    ingredients: "Chicken, Yogurt, Spices, Lemon",
+    cost: "₹220",
+    prep: "35 mins",
+    availability: "Available",
+    tags: ["high-protein", "low-carb"]
+  },
+  {
+    name: "Fish Tikka",
+    img: "https://images.unsplash.com/photo-1605479480066-40d21a5a5f71",
+    nutrition: "Protein: 30g | Carbs: 2g | Fat: 6g | Calories: 270",
+    ingredients: "Fish, Spices, Yogurt, Lemon",
+    cost: "₹240",
+    prep: "30 mins",
+    availability: "Available",
+    tags: ["high-protein", "low-carb", "low-calories"]
+  },
+  {
+    name: "Chicken Soup",
+    img: "https://images.unsplash.com/photo-1576765607924-3768a6025aaf",
+    nutrition: "Protein: 22g | Carbs: 4g | Fat: 5g | Calories: 190",
+    ingredients: "Chicken, Carrot, Spices, Herbs",
+    cost: "₹180",
+    prep: "25 mins",
+    availability: "Available",
+    tags: ["low-fat", "low-carb", "low-calories"]
+  },
+  {
+    name: "Egg Bhurji (Masala)",
+    img: "https://images.unsplash.com/photo-1633874474899-050d0ae3e71b",
+    nutrition: "Protein: 18g | Carbs: 3g | Fat: 10g | Calories: 220",
+    ingredients: "Eggs, Onion, Tomato, Spices",
+    cost: "₹150",
+    prep: "20 mins",
+    availability: "Available",
+    tags: ["high-protein", "low-carb"]
+  },
+  {
+    name: "Grilled Chicken Breast",
+    img: "https://images.unsplash.com/photo-1589927986089-35812388d1d4",
+    nutrition: "Protein: 32g | Carbs: 1g | Fat: 4g | Calories: 250",
+    ingredients: "Chicken Breast, Herbs, Olive Oil",
+    cost: "₹260",
+    prep: "30 mins",
+    availability: "Available",
+    tags: ["high-protein", "low-fat", "low-carb", "low-calories"]
+  },
+  {
+    name: "Prawn Masala Curry",
+    img: "https://images.unsplash.com/photo-1626082893633-d43e911f6b67",
+    nutrition: "Protein: 28g | Carbs: 7g | Fat: 9g | Calories: 310",
+    ingredients: "Prawns, Coconut, Onion, Spices",
+    cost: "₹270",
+    prep: "35 mins",
+    availability: "Available",
+    tags: ["high-protein"]
+  }
+];
+
+function renderDishes(filter = "all") {
+  const container = document.getElementById("dishContainer");
+  container.innerHTML = "";
+
+  const filtered = filter === "all" ? dishes : dishes.filter(d => d.tags.includes(filter));
+
+  filtered.forEach(dish => {
+    const card = document.createElement("div");
+    card.className = "col-md-4 mb-4";
+    card.innerHTML = `
+      <div class="card dish-card h-100">
+        <img src="${dish.img}" class="card-img-top" alt="${dish.name}" style="height: 200px; object-fit: cover;">
+        <div class="card-body">
+          <h5 class="card-title">${dish.name}</h5>
+          <p><strong>Ingredients:</strong> ${dish.ingredients}</p>
+          <p><strong>Nutrition:</strong> ${dish.nutrition}</p>
+          <p><strong>Prep Time:</strong> ${dish.prep}</p>
+          <p><strong>Cost:</strong> ${dish.cost}</p>
+          <p><strong>Status:</strong> ${dish.availability}</p>
+          <a href="payment.html?meal=${encodeURIComponent(dish.name)}" class="btn btn-success">Order Now</a>
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// Initial render
+renderDishes();
+
+document.getElementById("filter-nutrient").addEventListener("change", (e) => {
+  renderDishes(e.target.value);
+});
+</script>
+
+</body>
+</html>

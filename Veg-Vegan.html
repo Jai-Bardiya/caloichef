@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Veg/Vegan Dishes | CaloriChef</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .dish-card {
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: 0.3s;
+    }
+    .dish-card:hover {
+      transform: scale(1.02);
+    }
+    .filter-select {
+      max-width: 250px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container py-5">
+  <h2 class="text-center mb-4">Veg & Vegan Indian Dishes</h2>
+
+  <div class="d-flex justify-content-center mb-4 gap-3 flex-wrap">
+    <select class="form-select filter-select" id="filter-nutrient">
+      <option value="all">Filter by Nutrient</option>
+      <option value="high-protein">High Protein</option>
+      <option value="low-fat">Low Fat</option>
+      <option value="low-carb">Low Carb</option>
+      <option value="low-calories">Low Calories</option>
+    </select>
+  </div>
+
+  <div class="row" id="dishContainer">
+    <!-- Dish Cards -->
+  </div>
+</div>
+
+<script>
+const dishes = [
+  {
+    name: "Palak Tofu Curry",
+    img: "https://images.unsplash.com/photo-1613141411346-70a0037ab09b",
+    nutrition: "Protein: 18g | Carbs: 10g | Fat: 12g | Calories: 240",
+    ingredients: "Tofu, Spinach, Spices",
+    cost: "₹180",
+    prep: "25 mins",
+    availability: "Available",
+    tags: ["high-protein", "low-carb"]
+  },
+  {
+    name: "Chickpea Salad",
+    img: "https://images.unsplash.com/photo-1622445498381-1dcd93355ab4",
+    nutrition: "Protein: 15g | Carbs: 22g | Fat: 6g | Calories: 220",
+    ingredients: "Chickpeas, Tomato, Onion, Lemon",
+    cost: "₹150",
+    prep: "15 mins",
+    availability: "Available",
+    tags: ["high-protein", "low-fat"]
+  },
+  {
+    name: "Quinoa Pulao",
+    img: "https://images.unsplash.com/photo-1630413805724-d72d1a93c1cc",
+    nutrition: "Protein: 10g | Carbs: 25g | Fat: 4g | Calories: 210",
+    ingredients: "Quinoa, Vegetables, Spices",
+    cost: "₹170",
+    prep: "30 mins",
+    availability: "Available",
+    tags: ["low-fat", "low-calories"]
+  },
+  {
+    name: "Vegan Dal Fry",
+    img: "https://images.unsplash.com/photo-1623058695105-7c9c622169af",
+    nutrition: "Protein: 12g | Carbs: 18g | Fat: 6g | Calories: 200",
+    ingredients: "Lentils, Tomato, Garlic, Spices",
+    cost: "₹140",
+    prep: "30 mins",
+    availability: "Available",
+    tags: ["high-protein", "low-fat"]
+  },
+  {
+    name: "Stuffed Bell Peppers",
+    img: "https://images.unsplash.com/photo-1622448884670-0c1c4a1c0c0b",
+    nutrition: "Protein: 10g | Carbs: 14g | Fat: 7g | Calories: 190",
+    ingredients: "Bell Pepper, Rice, Veggies",
+    cost: "₹160",
+    prep: "35 mins",
+    availability: "Available",
+    tags: ["low-calories", "low-fat"]
+  },
+  {
+    name: "Vegan Sambar",
+    img: "https://images.unsplash.com/photo-1622453283585-b547ff937e6d",
+    nutrition: "Protein: 9g | Carbs: 20g | Fat: 3g | Calories: 180",
+    ingredients: "Toor Dal, Veggies, Tamarind",
+    cost: "₹130",
+    prep: "30 mins",
+    availability: "Available",
+    tags: ["low-fat", "low-calories"]
+  }
+];
+
+function renderDishes(filter = "all") {
+  const container = document.getElementById("dishContainer");
+  container.innerHTML = "";
+
+  const filtered = filter === "all" ? dishes : dishes.filter(d => d.tags.includes(filter));
+
+  filtered.forEach(dish => {
+    const card = document.createElement("div");
+    card.className = "col-md-4 mb-4";
+    card.innerHTML = `
+      <div class="card dish-card h-100">
+        <img src="${dish.img}" class="card-img-top" alt="${dish.name}" style="height: 200px; object-fit: cover;">
+        <div class="card-body">
+          <h5 class="card-title">${dish.name}</h5>
+          <p><strong>Ingredients:</strong> ${dish.ingredients}</p>
+          <p><strong>Nutrition:</strong> ${dish.nutrition}</p>
+          <p><strong>Prep Time:</strong> ${dish.prep}</p>
+          <p><strong>Cost:</strong> ${dish.cost}</p>
+          <p><strong>Status:</strong> ${dish.availability}</p>
+          <a href="payment.html?meal=${encodeURIComponent(dish.name)}" class="btn btn-success">Order Now</a>
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+renderDishes();
+
+document.getElementById("filter-nutrient").addEventListener("change", (e) => {
+  renderDishes(e.target.value);
+});
+</script>
+
+</body>
+</html>
